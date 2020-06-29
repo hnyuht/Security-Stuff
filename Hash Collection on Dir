@@ -1,1 +1,2 @@
+In Progress
 Get-ChildItem C:\ -Recurse -File -Force -ea SilentlyContinue -ev errs | % { Get-FileHash $_.Fullname -Algorithm MD5; Get-FileHash $_.Fullname -Algorithm SHA1; Get-FileHash $_.FullName -Algorithm SHA256} | Select-Object Hash,Path,@{Name='Name';Expression={[System.IO.Path]::GetFileName($_.Path)}} | Export-Csv C:\filename.csv
