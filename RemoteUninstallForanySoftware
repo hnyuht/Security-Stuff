@@ -1,0 +1,53 @@
+# Self-elevate the script if required
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
+ if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+  Exit
+ }
+}
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+$ComputerName = [Microsoft.VisualBasic.Interaction]::InputBox('ComputerName?', 'ComputerName', "$ComputerName")
+
+$ComputerName = New-PSSession
+
+Write-Host "Connected" -ForegroundColor Green
+
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+$SoftwareName = [Microsoft.VisualBasic.Interaction]::InputBox('SoftwareName?', 'SoftwareName', "$SoftwareName")
+
+$SoftwareName = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "$SoftwareName" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SoftwareName) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd -ArgumentList "/c $uninst /quiet /silent /verysilent /silentnoreboot /suppressmsgboxes /norestart"
+    }
+}
+$ProgressBars = @()
+$ProgressBars += New-ProgressBar -MaterialDesign -Type Horizontal -PrimaryColor Red -AccentColor LightBlue -Size Medium -Theme Light
+        Start-Sleep -Seconds 2 
+     
+    $i = 0 
+    foreach ($uninst in $uninst) {  
+                        $i++ 
+                        Start-Sleep -Milliseconds 2 
+                        foreach ($ProgressBar in $ProgressBars) { 
+         
+         
+                            Write-ProgressBar `
+                                    -ProgressBar $ProgressBar `
+                                    -Activity "Uninstalling" `
+                                    -PercentComplete (($i/$uninst.count) * 100) `
+                                    -CurrentOperation $uninst.FullName `
+                                    -SecondsRemaining ($i) 
+     
+     }
+}
