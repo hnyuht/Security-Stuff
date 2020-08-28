@@ -1,3 +1,6 @@
+$$I found this file during my malware analysis using Sodinokibi samples from Any.run.
+
+
 # v.1.1 29.08.2019 # CLEAN MEMORY ###################################################
 Invoke-Command {
 $console = $host.UI.RawUI
