@@ -1,2 +1,24 @@
-In Progress
-Get-ChildItem C:\ -Recurse -File -Force -ea SilentlyContinue -ev errs | % { Get-FileHash $_.Fullname -Algorithm MD5; Get-FileHash $_.Fullname -Algorithm SHA1; Get-FileHash $_.FullName -Algorithm SHA256} | Select-Object Hash,Path,@{Name='Name';Expression={[System.IO.Path]::GetFileName($_.Path)}} | Export-Csv C:\filename.csv
+# create the 3 different hasher objects
+$md5Hasher    = [System.Security.Cryptography.MD5]::Create()
+$sha1Hasher   = [System.Security.Cryptography.SHA1]::Create()
+$sha256Hasher = [System.Security.Cryptography.SHA256]::Create()
+
+# Loop through the files in the root path
+Get-ChildItem -Path 'C:\SomePath' -File -Recurse -Force -ErrorAction SilentlyContinue | 
+ForEach-Object { 
+    # read the content of the file as byte array only once
+    $bytes  = [System.IO.File]::ReadAllBytes($_.FullName)
+    # output an object with all properties you need
+    [PsCustomObject]@{
+        MD5    = ($md5Hasher.ComputeHash($bytes) | ForEach-Object { '{0:X2}' -f $_ }) -join ''
+        SHA1   = ($sha1Hasher.ComputeHash($bytes) | ForEach-Object { '{0:X2}' -f $_ }) -join ''
+        SHA256 = ($sha256Hasher.ComputeHash($bytes) | ForEach-Object { '{0:X2}' -f $_ }) -join ''
+        Signed = (Get-AuthenticodeSignature -Content $bytes -SourcePathorExtension $_.FullName).Status
+        Path   = $_.FullName
+    }
+} | Export-Csv -Path "C:\Test\$env:COMPUTERNAME.csv" -Encoding UTF8 -NoTypeInformation -Force
+
+# clean op the hasher objects when done
+$md5Hasher.Dispose()
+$sha1Hasher.Dispose()
+$sha256Hasher.Dispose()
