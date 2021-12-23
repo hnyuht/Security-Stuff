@@ -249,3 +249,5 @@ S1 query for files being downloaded with Python
 SrcProcCmdLine Contains "urllib.request.urlretrieve" OR SrcProcCmdLine Contains "import urllib.request"
 Combined it with certutil query.
 (SrcProcCmdLine Contains "import urllib.request" AND SrcProcName = "python.exe") OR (SrcProcCmdLine ContainsCIS "-urlcache -f" AND SrcProcName = "certutil.exe" )
+
+( FileFullName RegExp "Datop\\[^\\\{\}]+$" OR FileFullName RegExp "Babmo\\[^\\\{\}]+$" OR FileFullName RegExp "Dabmo\\[^\\\{\}]+$" OR FileFullName RegExp "Jambo\\[^\\\{\}]+$" OR FileFullName RegExp "Cabmo\\[^\\\{\}]+$") AND ( EventType IN ( "File Modification"      , "File Creation"      , "File Deletion"      , "File Rename" ) AND TgtFileExtension EXISTS )
