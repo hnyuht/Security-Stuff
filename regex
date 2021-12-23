@@ -1,2 +1,4 @@
 \${(\${(.*?:|.*?:.*?:-)('|"|`)*(?1)}*|[jndi:lapsrm]('|"|`)*}*){9,11}
 \${(\${(.*?:|.*?:.*?:-)('|"|`)*(?1)}*|[jndi:(ldap|rm)]('|"|`)*}*){9,10}
+
+TgtFilePath RegExp "AppData\\Local\\Microsoft\\Windows\\INetCache\\Content.Outlook" AND TgtFileExtension = "iso"
