@@ -1,0 +1,251 @@
+S1 Query for Sophos.
+Final
+SrcProcCmdLine In ( "cmd.exe  /c net stop SQLAgent$SOPH", "cmd.exe  /c net stop sophossps /y", "cmd.exe  /c net stop stop SepMasterService /y", "cmd.exe  /c net stop SAVService /y", "cmd.exe  /c net stop SAVAdminService /y", "cmd.exe  /c net stop sacsvr /y", "cmd.exe  /c net stop MSSQL$SOPHOS /y" ) OR SrcProcCmdLine ContainsCIS "cmd.exe  /c net stop \"Sophos"
+
+SrcProcCmdLine ContainsCIS "cmd.exe  /c net stop \"Sophos"
+
+cmd.exe /c net stop "Sophos Agent" /y
+cmd.exe /c net stop "Sophos AutoUpdate Service" /y
+cmd.exe /c net stop "Sophos Clean Service" /y
+cmd.exe /c net stop "Sophos Device Control Service" /y
+cmd.exe /c net stop "Sophos File Scanner Service" /y
+cmd.exe /c net stop "Sophos Health Service" /y
+cmd.exe /c net stop "Sophos MCS Agent" /y
+cmd.exe /c net stop "Sophos MCS Client" /y
+cmd.exe /c net stop "Sophos Message Router" /y
+cmd.exe /c net stop "Sophos Safestore Service" /y
+cmd.exe /c net stop "Sophos System Protection Service" /y
+cmd.exe /c net stop "Sophos Web Control Service" /y
+cmd.exe /c net stop MSSQL$SOPHOS /y
+cmd.exe /c net stop sacsvr /y
+cmd.exe /c net stop SAVAdminService /y
+cmd.exe /c net stop SAVService /y
+cmd.exe /c net stop stop SepMasterService /y
+cmd.exe /c net stop Smcinst /y
+cmd.exe /c net stop SmcService /y
+cmd.exe /c net stop SntpService /y 	
+cmd.exe /c net stop sophossps /y
+
+Sophos Source: https://support.sophos.com/support/s/article/KB-000033322?language=en_US#:~:text=Sophos%20Agent%20provides%20the%20interface,through%20the%20Remote%20Management%20System.&text=This%20service%20starts%20and%20runs,including%20the%20on%2Daccess%20scanner.
+
+cmd.exe /c net stop "Sophos Agent" /y
+Sophos Agent provides the interface between Sophos Anti-Virus (SAV) and the local message router.
+It sends SAV messages to the server and receives SAV configurations from the server through the Remote Management System.
+
+cmd.exe /c net stop "Sophos AutoUpdate Service" /y
+This keeps endpoint components (including malware IDEntity files) up to date, including itself, whenever there are newer versions available.
+This ill also download when the local AutoUpdate cache is incomplete or when the catalog in the share has changed.
+
+cmd.exe /c net stop "Sophos Clean Service" /y
+Cleans up malware detected by Intercept X (HMPA), Exploit Prevention, and PE files as part of the Sophos Central Core Agent 2.0.0 release.
+
+cmd.exe /c net stop "Sophos Device Control Service" /y
+Performs device control functions such as detecting and blocking unauthorized USB devices attached to the computer.
+Dependencies: RPC service.
+
+cmd.exe /c net stop "Sophos File Scanner Service" /y
+Used to scans files for reputation, deep learning, and Application ID.
+
+cmd.exe /c net stop "Sophos Health Service" /y
+Determines the health status of the endpoint.
+
+cmd.exe /c net stop "Sophos MCS Agent" /y
+Management Communications Agent
+
+cmd.exe /c net stop "Sophos MCS Client" /y
+Management Communications Client
+
+cmd.exe /c net stop "Sophos Message Router" /y
+This service provides communication between various components.
+Its main purpose is to send and receive information between the server and managed computers.
+It also queues messages if the network goes down. Sophos Message Router is also used by client computers.
+
+cmd.exe /c net stop "Sophos Safestore Service" /y
+Allows customers and Sophos to release items from the SafeStore which will move the items back to their original locations, basically reverting them to a state before removal. This is the primary remediation agent for Machine Learning and Exploit prevention detections.
+
+cmd.exe /c net stop "Sophos System Protection Service" /y
+Gathers and records information from other Sophos components on the system and can look up information from Sophos cloud services.
+The information gathered from multiple sources is used intelligently to improve the detection of malicious files, processes, and traffic.
+
+cmd.exe /c net stop "Sophos Web Control Service" /y
+Manages Web Control policies.
+Dependencies: RPC service.
+
+cmd.exe /c net stop Antivirus /y’
+Trying to stop any Antivirus.
+Websense?
+
+
+cmd.exe /c net stop AVP /y
+Command to stop Kaspersky
+
+cmd.exe /c net stop DCAgent /y
+cmd.exe /c net stop EhttpSrv /y
+ESet
+
+cmd.exe /c net stop ekrn /y
+ESet
+
+cmd.exe /c net stop EPSecurityService /y 	
+BitDefender
+
+cmd.exe /c net stop EPUpdateService /y 		
+BitDefender
+
+cmd.exe /c net stop EsgShKernel /y
+SpyHunter
+
+cmd.exe /c net stop ESHASRV /y
+Unknown
+
+cmd.exe /c net stop FA_Scheduler /y
+Forticlient
+﻿
+cmd.exe /c net stop IMAP4Svc /y
+?
+
+cmd.exe /c net stop KAVFS /y
+Kaspersky
+
+cmd.exe /c net stop KAVFSGT /y
+Kaspersky
+
+cmd.exe /c net stop stop kavfsslp /y
+Kaspersky
+
+cmd.exe /c net stop klnagent /y
+Kaspersky
+
+cmd.exe /c net stop macmnsvc /y
+Mcafee
+
+cmd.exe /c net stop masvc /y
+Mcafee
+
+cmd.exe /c net stop MBAMService /y
+malwarebytes
+
+cmd.exe /c net stop MBEndpointAgent /y 	
+malwarebytes
+
+cmd.exe /c net stop McAfeeEngineService /y 	
+Mcafee
+
+cmd.exe /c net stop McAfeeFramework /y
+Mcafee
+
+cmd.exe /c net stop McAfeeFrameworkMcAfeeFramework /y
+Mcafee
+
+cmd.exe /c net stop McShield /y
+Mcafee
+
+cmd.exe /c net stop McTaskManager /y
+Mcafee
+
+cmd.exe /c net stop mfefire /y
+Mcafee
+
+cmd.exe /c net stop mfemms /y
+Mcafee
+
+cmd.exe /c net stop mfevtp /y
+MCafee
+
+cmd.exe /c net stop MSSQL$SOPHOS /y
+Sophos
+
+cmd.exe /c net stop sacsvr /y
+cmd.exe /c net stop SAVAdminService /y
+Sophos
+
+cmd.exe /c net stop SAVService /y
+Sophos
+
+cmd.exe /c net stop stop SepMasterService /y
+symantec
+
+cmd.exe /c net stop ShMonitor /y
+Spyhunter
+
+cmd.exe /c net stop Smcinst /y
+Symantec
+
+cmd.exe /c net stop SmcService /y
+Symantec
+
+cmd.exe /c net stop SntpService /y 	
+Sophos
+
+cmd.exe /c net stop sophossps /y
+Sophos
+
+SrcProcCmdLine In ( 
+"powershell.exe -command \"Set-MpPreference -SevereThreatDefaultAction 6\"",
+"powershell.exe -command \"Set-MpPreference -HighThreatDefaultAction 6 -Force\"",
+"powershell.exe -command \"Set-MpPreference -ModerateThreatDefaultAction 6\"",
+"powershell.exe -command \"Set-MpPreference -LowThreatDefaultAction 6\"",
+"powershell.exe -command \"Set-MpPreference -DisableRealtimeMonitoring $true\"",
+"powershell.exe -command \"Set-MpPreference -DisableBehaviorMonitoring $true\"" ,
+"powershell.exe -command \"Set-MpPreference -SubmitSamplesConsent 2\"",
+"powershell.exe -command \"Set-MpPreference -DisableIOAVProtection $true\"",
+"powershell.exe -command \"Set-MpPreference -SignatureDisableUpdateOnStartupWithoutEngine $true\"",
+"powershell.exe -command \"Set-MpPreference -PUAProtection disable\"",
+"powershell.exe -command \"Set-MpPreference -DisablePrivacyMode $true\"",
+"powershell.exe -command \"Set-MpPreference -DisableScriptScanning $true\"",
+"powershell.exe -command \"Set-MpPreference -DisableArchiveScanning $true\"",
+"powershell.exe -command \"Set-MpPreference -DisableIntrusionPreventionSystem $true\"",
+"powershell.exe -command \"Set-MpPreference -DisableBlockAtFirstSeen $true\"",
+"powershell.exe -command \"Set-MpPreference -MAPSReporting 0\"")
+
+EventType IN ( "File Modification" , "File Creation") AND (RegistryKeyPath ContainsCIS "BlackLivesMatter" or RegistryValue ContainsCIS "BlackLivesMatter")
+
+(TgtProcPublisher contains "WEN JIA LIU" OR SrcProcPublisher Contains Anycase "WEN JIA LIU" OR TgtFilePath ContainsCIS "ProcessHacker.exe" OR TgtFilePath = "PH.exe" OR TgtFilePath ContainsCIS "kprocesshacker.sys") AND SiteName != "mdr-TetraDefense-Internal"
+
+https://www.crowdstrike.com/blog/registry-analysis-with-crowdresponse/
+REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe" /f /v Debugger /t REG_SZ /d "%windir%\system32\cmd.exe"
+Another common variant takes advantage of a different part of the accessibility suite, Utilman. The attack is identical to the sethc.exe registry debugger modification seen above, except the binary is now Utilman.exe and a simple Windows key + U combination will present a LOCAL_SYSTEM privileged shell.
+
+https://www.mvps.net/docs/how-to-secure-remote-desktop-rdp/
+SrcProcCmdLine In ( "reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v SecurityLayer /t REG_DWORD /d 0 /f", "reg  add  
+Another useful little trick is the RDP session encryption level and force TLS (Transport Layer Security) implementation.
+Security Layer 0 – With a low security level, the remote desktop protocol is used by the client for authentication prior to a remote desktop connection being established. Use this setting if you are working in an isolated environment.
+Security Layer 1 – With a medium security level, the server and client negotiate the method for authentication prior to a Remote Desktop connection being established. As this is the default value, use this setting only if all your machines are running Windows.
+Security Layer 2- With a high security level, Transport Layer Security, better knows as TLS is used by the server and client for authentication prior to a remote desktop connection being established. 
+
+
+It is commonly known that Windows Remote Desktop port is 3389 and thus attacks are generally targeted at this port. A common practice would be to change it to a random free port and add the change to the firewall. Make sure you don’t get locked out during the process.
+
+"reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v PortNumber /t REG_DWORD /d 3389 /f"
+
+Enable RDP
+"reg  add \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f" 
+
+S1 Query
+SrcProcCmdLine In 
+( "reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v SecurityLayer /t REG_DWORD /d 0 /f", 
+"reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v UserAuthentication /t REG_DWORD /d 0 /f", 
+"reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v PortNumber /t REG_DWORD /d 3389 /f", 
+"reg  add \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f" ) AND IndicatorCategory = "Evasion"
+
+SrcProcName = "reg.exe" AND SrcProcCmdLine In ( "reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v SecurityLayer /t REG_DWORD /d 0 /f", "reg  add  \"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" /v UserAuthentication /t REG_DWORD /d 0 /f" ) AND RegistryKeyPath In ( "MACHINE\SYSTEM\ControlSet001\Control\Terminal Server\WinStations\RDP-Tcp\SecurityLayer", "MACHINE\SYSTEM\ControlSet001\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication" ) AND EventType = "Registry Value Modified"
+
+ProcessCmd ContainsCIS "powershell" AND (SrcProcParentName = "RazerInstaller.exe" OR SrcProcParentName = "SteelSeriesEngine.exe") AND SrcProcIntegrityLevel = "SYSTEM"
+
+(SrcProcParentName = "w3wp.exe" OR SrcProcParentName = "powershell.exe" OR SrcProcParentName = "cmd.exe") AND TgtFileExtension In Contains Anycase  ( "aspx"  , "php" , "txt" , "dll", "exe", "compiled") AND EndpointMachineType = "server" AND (TgtFilePath RegExp "Program Files\\Microsoft\\Exchange Server\\V15\\FrontEnd\\HttpProxy\\owa\\auth" OR TgtFilePath RegExp "Program Files\\Microsoft\\Exchange Server\\V15\\FrontEnd\\HttpProxy\\ecp\\auth" OR TgtFilePath RegExp "Program Files\\Microsoft\\Exchange Server\\V15\\FrontEnd\\HttpProxy\\owa\\auth\\current" OR TgtFilePath RegExp "Program Files\\Microsoft\\Exchange Server\\V15\\FrontEnd\\HttpProxy\\owa\\auth\\current\\themes" OR TgtFilePath RegExp "Windows\\Microsoft.NET\\Framework64" OR TgtFilePath RegExp "inetpub\\wwwroot\\aspnet_client" OR TgtFilePath RegExp "inetpub\\wwwroot\\aspnet_client\\system_web" OR TgtFilePath RegExp "AppData\\Local\\Microsoft\\Windows\\INetCache\\IE" OR TgtFilePath RegExp "ProgramData\\COM1" OR TgtFilePath RegExp "ProgramData\\COM" OR TgtFilePath RegExp "ProgramData\\WHO" OR TgtFilePath RegExp "ProgramData\\ZING" OR TgtFilePath RegExp "ProgramData\\COM\\XYZ") AND EventType In ("File Creation", "File Deletion") 
+
+( FileFullName RegExp "Datop\\[^\\\{\}]+$" OR FileFullName RegExp "Babmo\\[^\\\{\}]+$" OR FileFullName RegExp "Dabmo\\[^\\\{\}]+$" ) AND ( EventType IN ( "File Modification"   , "File Creation"   , "File Deletion"   , "File Rename" ) AND TgtFileExtension EXISTS )
+
+Getting cmd as admin if you dont have gui access.
+S1 Query
+SrcProcName = "powershell.exe" AND SrcProcCmdLine = "powershell  \"start cmd -v runAs" AND SrcProcParentName = "cmd.exe" AND IndicatorName = "SuspiciousShellcode" AND IndicatorCategory = "Exploitation" AND IndicatorDescription = "Shellcode execution from Powershell was detected. MITRE: Execution {<a href=\"https://attack.mitre.org/techniques/T1059/001\" target=\"_blank\">T1059.001</a>, <a href=\"https://attack.mitre.org/techniques/T1106/\" target=\"_blank\">T1106</a>}"
+
+( ( TgtFilePath RegExp "Windows\\Temp\\[^\\\{\}]+$" OR TgtFilePath RegExp "Program Data\\[^\\\{\}]+$") AND SiteName ContainsCIS "Hoof" AND EventType In ( "File Creation"  , "File Scan" ) AND SrcProcPublisher = "SPLASHTOP INC." )
+
+suspicious vmtools masking a remote tools.
+(TgtFilePath RegExp "Program Files\\VMware\\VMware Tools\\bin" OR TgtFilePath RegExp "Program Files\\VMware\\tools\\bin") AND EventType IN ( "File Scan", "Pre Execution Detection", "File Modification" , "File Creation" , "File Deletion" , "File Rename" ) AND TgtFileExtension = "exe" and TgtProcPublisher contains "REMOTE UTILITIES LLC" 
+
+S1 query for files being downloaded with Python
+SrcProcCmdLine Contains "urllib.request.urlretrieve" OR SrcProcCmdLine Contains "import urllib.request"
+Combined it with certutil query.
+(SrcProcCmdLine Contains "import urllib.request" AND SrcProcName = "python.exe") OR (SrcProcCmdLine ContainsCIS "-urlcache -f" AND SrcProcName = "certutil.exe" )
