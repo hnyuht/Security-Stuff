@@ -1,0 +1,40 @@
+# Self-elevate the script if required
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
+ if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+  Exit
+ }
+}
+
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+$ComputerName = [Microsoft.VisualBasic.Interaction]::InputBox('ComputerName?', 'ComputerName', "$ComputerName")
+
+$cred = Get-Credential
+$session = New-PSSession -ComputerName "$ComputerName" -Credential $cred
+
+Invoke-Command -Session $session -ScriptBlock {
+  Write-Host "Remote session established."
+}
+
+$source = "C:\Source\Folder"
+$destination = "\\RemoteServer\Destination\Folder"
+
+Write-Host "Copying folder from $source to $destination"
+
+# Check if the source folder exists
+if (Test-Path $source) {
+  # Check if the destination folder exists
+  if (Test-Path $destination) {
+    Write-Host "Destination folder already exists, overwriting..."
+    Remove-Item -Path $destination -Recurse -Force
+  }
+
+  # Copy the folder
+  Copy-Item -Path $source -Destination $destination -Recurse
+  
+  Write-Host "Folder copied successfully."
+} else {
+  Write-Host "Source folder does not exist."
+}
