@@ -1,0 +1,84 @@
+/**
+ * GOOGLE GEMINI 3 FLASH PREVIEW - NOTES & GRAMMAR AUTOMATOR
+ */
+
+const API_KEY = 'INSERT KEY'; // Replace with your key
+const MODEL = 'gemini-3-flash-preview'; // Updated to the preview model
+
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('AI Assistant')
+    .addItem('✨ Process with Instructions', 'processWithPopup')
+    .addToUi();
+}
+
+function callGemini(prompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
+  const payload = { contents: [{ parts: [{ text: prompt }] }] };
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(url, options);
+    const json = JSON.parse(response.getContentText());
+    if (json && json.candidates && json.candidates[0].content) {
+      return json.candidates[0].content.parts[0].text.trim();
+    }
+    return "Error: " + response.getContentText();
+  } catch (e) {
+    return "Error: Connection failed";
+  }
+}
+
+function processWithPopup() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const lastRow = sheet.getLastRow();
+  const ui = SpreadsheetApp.getUi();
+  
+  // 1. Ask for instructions via Popup
+  const response = ui.prompt(
+    'Gemini AI Assistant', 
+    'What should I do with these notes? (e.g., "Fix grammar", "Summarize", "Write a follow-up")', 
+    ui.ButtonSet.OK_CANCEL
+  );
+  
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+  const userInstruction = response.getResponseText();
+
+  // 2. Identify Columns
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const notesCol = headers.indexOf('Notes') + 1;
+
+  if (notesCol === 0) {
+    ui.alert('Error: Please name a column "Notes" in the first row.');
+    return;
+  }
+
+  // 3. Process the rows
+  for (let i = 2; i <= lastRow; i++) {
+    const companyName = sheet.getRange(i, 1).getValue(); // Reads Company from Column A
+    const rawNote = sheet.getRange(i, notesCol).getValue(); // Reads existing Note from Column B
+    
+    if (companyName) {
+      const prompt = `
+        Instruction: ${userInstruction}
+        Company Context: ${companyName}
+        Current Note: "${rawNote}"
+        
+        Task: Apply the instruction to the note while keeping it relevant to ${companyName}. 
+        If the note is empty, generate a new one based on the instruction and company name.
+        Return ONLY the resulting text.
+      `;
+      
+      const aiResult = callGemini(prompt);
+      
+      if (!aiResult.startsWith("Error:")) {
+        sheet.getRange(i, notesCol).setValue(aiResult);
+        sheet.getRange(i, notesCol).setBackground("#e6fff0"); // Light green highlight
+      }
+    }
+  }
+}
